@@ -1,0 +1,2 @@
+class CountNumber < ApplicationRecord
+end
