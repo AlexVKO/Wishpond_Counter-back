@@ -49,4 +49,34 @@ RSpec.describe CountNumbersController, type: :controller do
       it { should respond_with 422 }
     end
   end
+
+  describe "DELETE #destroy" do
+    context 'when the number is deleted' do
+      before :each do
+        @count_number = FactoryGirl.create :count_number
+        delete :destroy, params: { id: @count_number.id }
+      end
+
+      it { should respond_with 204}
+
+      it 'does not find this instance anymore' do
+        expect { @count_number.reload }.to raise_error ActiveRecord::RecordNotFound
+      end
+    end
+  end
+
+  describe "DELETE #destroy_all" do
+    context 'when the number is deleted' do
+      before :each do
+        3.times { FactoryGirl.create :count_number }
+        delete :destroy_all
+      end
+
+      it { should respond_with 204}
+
+      it 'finds a empty database' do
+        expect(CountNumber.count).to be_zero
+      end
+    end
+  end
 end

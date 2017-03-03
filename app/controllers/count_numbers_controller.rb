@@ -17,8 +17,19 @@ class CountNumbersController < ApplicationController
     end
   end
 
-  private
+  # DELETE /count_numbers/:id
+  def destroy
+    CountNumber.find(params[:id]).destroy
+    head 204
+  end
 
+  # DELETE /count_numbers/destroy_all
+  def destroy_all
+    CountNumber.destroy_all
+    head 204
+  end
+
+  private
   def count_number_params
     params.require(:count_number).permit(:value)
   end
