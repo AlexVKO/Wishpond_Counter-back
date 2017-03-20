@@ -46,8 +46,6 @@ function _ajax(verb, url, data) {
   return new Promise(
     function(resolve, reject) {
       xhr.onload = function() {
-        console.log(verb, url)
-        console.log(xhr)
 
         if ([200, 201].indexOf(xhr.status) >= 0) {
           var res = JSON.parse(xhr.responseText);

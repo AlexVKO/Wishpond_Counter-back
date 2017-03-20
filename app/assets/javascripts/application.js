@@ -4,29 +4,29 @@
 //= require count_number_ajax
 
 document.addEventListener("DOMContentLoaded", function(event) {
+  'use strict';
 
   // DOM
   var $counterBtn   = document.getElementById('add-counter-btn'),
       $deleteAllBtn = document.getElementById('destroy-all-btn'),
       $table        = document.getElementById('count-number_table'),
-      $row          = document.getElementById('count-number_row'),
-      $dummyRow     = document.getElementById('dummy-row');
-
+      $dummyRow     = document.getElementById('dummy-row'),
+      $placeholderRow = document.getElementById('placeholder-row');
 
   function init() {
     // Get data and start counter
     CountNumberAjax()
-    .index()
-    .then(function(numbers) {
-      _populateTable(numbers)
-      _startCounter();
-    })
+      .index()
+      .then(function(numbers) {
+        _populateTable(numbers);
+        _startCounter();
+      });
 
     // ------ LISTNERS DEFINITIONS
     $deleteAllBtn.addEventListener("click", _deleteAll);
     $counterBtn.addEventListener("click", function($event) {
       var currentCountNumber = $event.toElement.innerHTML.trim();
-      _save(currentCountNumber)
+      _save(currentCountNumber);
     });
   }
 
@@ -46,23 +46,25 @@ document.addEventListener("DOMContentLoaded", function(event) {
   function _deleteAll() {
     CountNumberAjax()
       .destroyAll()
-      .then( _removeAllTableRows );
+      .then(_removeAllTableRows);
   }
 
   function _save(value) {
     CountNumberAjax()
       .create(value)
       .then(function(countNumber) {
-        row  = _buildRow(countNumber["id"], countNumber["value"]);
+        var row  = _buildRow(countNumber["id"], countNumber["value"]);
         $table.appendChild(row);
+        _togglePlaceHolderRowIfTableIsEmpty();
       });
   }
 
   function _removeAllTableRows() {
-    while ($table.childNodes.length > 1) {
+    while ($table.getElementsByTagName('tr').length > 2) {
         $table.removeChild($table.lastChild);
     }
-    // ps: Except the dummy row
+    _togglePlaceHolderRowIfTableIsEmpty();
+    // ps: Except the dummy row and placeholder
   }
 
   /**
@@ -70,10 +72,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
   */
   function _populateTable(countNumbers) {
     var row;
-    for (i = 0; i < countNumbers.length; i++) {
+    for (var i = 0; i < countNumbers.length; i++) {
       row  = _buildRow(countNumbers[i]["id"], countNumbers[i]["value"]);
       $table.appendChild(row);
     }
+    _togglePlaceHolderRowIfTableIsEmpty();
   }
 
   /**
@@ -101,10 +104,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
         .destroy(countNumberID)
         .then(function() {
           $row.remove();
+          _togglePlaceHolderRowIfTableIsEmpty();
         });
     });
 
-    return $row
+    return $row;
+  }
+
+  function _togglePlaceHolderRowIfTableIsEmpty() {
+    var rows = $table.getElementsByTagName('tr');
+    if (rows.length > 2) {
+      $placeholderRow.style.display = 'none';
+    } else {
+      $placeholderRow.style.display = '';
+    }
   }
 
   init();
