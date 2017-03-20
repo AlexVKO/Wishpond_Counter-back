@@ -9,6 +9,10 @@ gem 'rails', '~> 5.0.2'
 gem 'mysql2', '>= 0.3.18', '< 0.5'
 gem 'puma', '~> 3.0'
 
+gem 'sass-rails', '~> 5.0'
+gem 'uglifier', '>= 1.3.0'
+gem 'coffee-rails', '~> 4.2'
+
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
 
@@ -29,6 +33,7 @@ end
 
 group :development do
   gem 'listen', '~> 3.0.5'
+
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'

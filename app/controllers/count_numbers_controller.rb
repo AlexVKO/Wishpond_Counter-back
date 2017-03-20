@@ -1,4 +1,4 @@
-class CountNumbersController < ApplicationController
+class CountNumbersController < ActionController::API
 
   # GET /count_numbers
   def index
