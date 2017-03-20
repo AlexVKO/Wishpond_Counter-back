@@ -26,7 +26,7 @@ RSpec.describe CountNumbersController, type: :controller do
 
       before(:each) do
         @count_number_attributes = FactoryGirl.attributes_for(:count_number)
-        post :create, params: { count_number: @count_number_attributes }
+        post :create, params: { count_number: @count_number_attributes[:value] }
       end
 
       it 'returns the number just created' do
@@ -39,7 +39,7 @@ RSpec.describe CountNumbersController, type: :controller do
     context "when count_number is NOT successfully created" do
       before(:each) do
         @count_number_attributes = FactoryGirl.attributes_for(:count_number, value: nil)
-        post :create, params: { count_number: @count_number_attributes}
+        post :create, params: { count_number: @count_number_attributes[:value] }
       end
 
       it 'render the errons on why the count_number could not be created' do

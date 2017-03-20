@@ -8,7 +8,7 @@ class CountNumbersController < ActionController::API
 
   # POST /count_numbers
   def create
-    @count_number = CountNumber.new(count_number_params)
+    @count_number = CountNumber.new(value: params[:count_number])
     if @count_number.save
       render json: @count_number, status: :created, location: @count_number
     else
@@ -27,10 +27,5 @@ class CountNumbersController < ActionController::API
   def destroy_all
     CountNumber.destroy_all
     head 204
-  end
-
-  private
-  def count_number_params
-    params.require(:count_number).permit(:value)
   end
 end
