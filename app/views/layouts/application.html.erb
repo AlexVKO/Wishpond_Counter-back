@@ -4,11 +4,26 @@
     <title>Wishpong Counter</title>
     <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
   </head>
 
   <body>
-    <%= yield %>
+    <div class="header">
+      <div class="navbar navbar-default" role="navigation" style="margin-bottom: 0px;">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" target="_blank" href="https://github.com/alexvko">
+              Wishpond Counter
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <%= yield %>
+    </div>
   </body>
 </html>
+

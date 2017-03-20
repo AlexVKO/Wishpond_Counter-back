@@ -1,0 +1,62 @@
+<div class="jumbotron">
+  <p class="lead">
+    Click to save the number
+  </p>
+
+  <p>
+    <!-- Action dropdown, for adding and delete all -->
+    <div class="btn-group">
+      <button type="button"
+              id="add-counter-btn"
+              class="btn action-btn btn-lg btn-success">
+              Loading...
+      </button>
+        <!-- Loading... -->
+
+      <!-- Dropdown -->
+      <button type="button"
+              class="btn action-btn btn-lg btn-success dropdown-toggle"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false">
+        <span class="caret"></span>
+        <span class="sr-only">Toggle Dropdown</span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a id="destroy-all-btn" href="javascript:void(0)">Delete all</a></li>
+      </ul>
+    </div>
+  </p>
+
+  <!-- Table -->
+  <table class="table table-bordered table-hover" >
+   <thead>
+     <tr>
+       <th class="text-center">Number</th>
+     </tr>
+   </thead>
+
+   <tbody id="count-number_table">
+    <!--===============================
+    =            Dummy Row            =
+    ================================-->
+    <tr id="dummy-row">
+      <td>
+        <span class="value-label"></span>
+        <a href="javascript:void(0)"
+           class="delete-btn btn-sm text-danger pull-right">
+          <i class="glyphicon glyphicon-trash"></i>
+          </a>
+      </td>
+    </tr>
+    <!--====  End of Dummy Row  ====-->
+    <tr id="placeholder-row">
+       <td>Let's start!</td>
+    </tr>
+   </tbody>
+ </table>
+</div>
+
+
+
+
