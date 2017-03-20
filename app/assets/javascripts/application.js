@@ -10,7 +10,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
       $deleteAllBtn = document.getElementById('destroy-all-btn'),
       $table        = document.getElementById('count-number_table'),
       $row          = document.getElementById('count-number_row'),
-      $dummyRow     = document.getElementById('dummy-row');
+      $dummyRow     = document.getElementById('dummy-row'),
+      $placeholderRow = document.getElementById('placeholder-row');
 
 
   function init() {
@@ -55,25 +56,29 @@ document.addEventListener("DOMContentLoaded", function(event) {
       .then(function(countNumber) {
         row  = _buildRow(countNumber["id"], countNumber["value"]);
         $table.appendChild(row);
+        _togglePlaceHolderRowIfTableIsEmpty();
       });
   }
 
   function _removeAllTableRows() {
-    while ($table.childNodes.length > 1) {
+    while ($table.getElementsByTagName('tr').length > 2) {
         $table.removeChild($table.lastChild);
     }
-    // ps: Except the dummy row
+   _togglePlaceHolderRowIfTableIsEmpty();
+    // ps: Except the dummy row and placeholder
   }
 
   /**
   * @param  { [Hash] } CountNumbers
   */
   function _populateTable(countNumbers) {
+    $placeholderRow.display = false;
     var row;
     for (i = 0; i < countNumbers.length; i++) {
       row  = _buildRow(countNumbers[i]["id"], countNumbers[i]["value"]);
       $table.appendChild(row);
     }
+    _togglePlaceHolderRowIfTableIsEmpty()
   }
 
   /**
@@ -101,10 +106,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
         .destroy(countNumberID)
         .then(function() {
           $row.remove();
+          _togglePlaceHolderRowIfTableIsEmpty();
         });
     });
 
     return $row
+  }
+
+  function _togglePlaceHolderRowIfTableIsEmpty() {
+    var rows = $table.getElementsByTagName('tr');
+    if (rows.length > 2) {
+      $placeholderRow.style.display = 'none';
+    } else {
+      $placeholderRow.style.display = '';
+    }
   }
 
   init();
